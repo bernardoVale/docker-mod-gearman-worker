@@ -96,3 +96,27 @@ docker exec lb2-appliance bash -c \
 OK - 0.07 seconds to connect as SYSTEM | connection_time=0.0676;1;5
 
 ```
+
+Troubleshooting
+=================
+
+Error:
+````
+CRITICAL: Return code of 127 is out of bounds. Make sure the plugin you're trying to run actually exists. (worker: APP)
+
+[/usr/bin/env: /usr/local/nagios/libexec/check_custom_script: No such file or directory]
+
+```
+**Cause** 
+
+You're using a Nagios script that doesn't exists inside the container.
+
+**Solution**
+
+Send the script from your Docker host to the container via [docker cp] (https://docs.docker.com/engine/reference/commandline/cp/).
+
+`docker cp check_custom_script my-container-name:/usr/local/nagios/libexec/check_custom_script`
+
+**OR**
+
+If you think the script it's really important and others may also benefit from it please send my a PR.
