@@ -3,7 +3,7 @@ Getting Started
 
 To be able to use this container you need to specify two environment variables at docker run
 
-Variable `CLIENTE` to definy which Nagios hostgroup this worker will server
+Variable `HOSTGROUP` to define which Nagios hostgroup this worker will server
 
 Variable `SERVER` which define ip:port of your Gearman server
 
@@ -14,9 +14,10 @@ Variable `SERVER` which define ip:port of your Gearman server
 
 ```
 docker run -d --name lb2-appliance \
--e CLIENTE=CLIENTE-XYZ \
+-e HOSTGROUP=MYHOSTGROUP \
 -e SERVER=GEARMANSERVER:GEARMAN_PORT \
-bernardovale/lb2-appliance```
+bernardovale/lb2-appliance
+```
 
 
 Tags
@@ -76,7 +77,7 @@ Lauch your container and map your tnsnames.ora folder pointing to `TNS_ADMIN` wh
 #### Example of a container with Oracle Client
 ```
 docker run -d --name lb2-appliance \
--e CLIENTE=APP \
+-e HOSTGROUP=APP \
 -e SERVER=GEARMANSERVER:4730 \
 -v /appliance/oracle:/usr/local/instantclient/network/admin \
 lb2-appliance:oracle
