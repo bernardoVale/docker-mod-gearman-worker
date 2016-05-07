@@ -1,15 +1,17 @@
 FROM centos:6.7
-MAINTAINER Bernardo Vale <bernardo.vale@lb2.cm.br>
+MAINTAINER Bernardo Vale <bernardosilveiravale@gmail.com>
 
-# Baixando pacotes do Mod Gearman
-ADD download.sh /tmp/
+# Downloading Mod Gearman packages from Nagios 
+
+ADD *.sh /
 RUN yum install -y wget ; \
-/tmp/download.sh
+/download.sh
 
-#Limpeza do YUM
-RUN rm -f /var/lib/rpm/__db* ; rpm --rebuilddb; yum clean all
+# Cleaning YUM - Without this gearman worker installation fails
+RUN yum clean all 
+#; rm -f /var/lib/rpm/__db* ; rpm --rebuilddb
 
-# Instalando Mod Gearman
+# Installing Mod Gearman Worker
 RUN (yum --nogpgcheck --enablerepo base -y install /tmp/gearmand-0.33-2.rhel6.x86_64.rpm && yum --nogpgcheck --enablerepo base -y install /tmp/gearmand-devel-0.33-2.rhel6.x86_64.rpm && yum --nogpgcheck --enablerepo base -y install /tmp/mod_gearman2-2.1.1-1.rhel6.x86_64.rpm && yum clean all)
 
 #Supervisord + Nagios Scripts
@@ -19,16 +21,17 @@ mv -f /etc/supervisord.conf /etc/supervisord.conf.org
 
 ADD supervisord.conf /etc/
 
-#Configuracao do Mod Gearman
+#Configuring Gearman
 ADD worker.conf /etc/mod_gearman2/worker.conf
 
-#Adicionando script de entrypoint
-ADD entrypoint.sh /entrypoint.sh
-
-# Links simbolicos
-RUN mkdir -p /usr/local/nagios/libexec ; \ 
+# Providing sym links
+RUN mkdir -p /usr/local/nagios/libexec ; \
+mkdir -p /usr/lib/nagios/plugins ; \ 
 ln -s /usr/lib64/nagios/plugins/check_nrpe /usr/local/nagios/libexec/check_nrpe ; \
 ln -s /usr/lib64/nagios/plugins/check_icmp /usr/local/nagios/libexec/check_icmp ; \
-ln -s /usr/local/nagios/libexec/check_nt /usr/local/nagios/libexec/check_nt
+ln -s /usr/lib64/nagios/plugins/check_nt /usr/local/nagios/libexec/check_nt ; \
+ln -s /usr/lib64/nagios/plugins/check_nrpe /usr/lib/nagios/plugins/check_nrpe ; \
+ln -s /usr/lib64/nagios/plugins/check_icmp /usr/lib/nagios/plugins/check_icmp ; \
+ln -s /usr/lib64/nagios/plugins/check_nt /usr/lib/nagios/plugins/check_nt
 
 ENTRYPOINT ["/entrypoint.sh"]

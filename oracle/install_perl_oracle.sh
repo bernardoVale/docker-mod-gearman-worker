@@ -37,4 +37,3 @@ rm -rf /tmp/DBI-1.636
 rm -rf /tmp/check_oracle_health-1.7.3.tar.gz
 rm -rf /tmp/*.rpm
 rm -rf /tmp/*.zip
-rm -rf /tmp/*.sh
