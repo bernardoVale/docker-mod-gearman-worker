@@ -11,7 +11,7 @@ fi
 #Changing defaults
 sed -i "s/identifier\=LB2/identifier\=$HOSTGROUP/" /etc/mod_gearman2/worker.conf
 sed -i "s/hostgroups\=LB2/hostgroups\=$HOSTGROUP/" /etc/mod_gearman2/worker.conf
-sed -i "s/server\=/server\=$SERVER/" /etc/mod_gearman2/worker.conf
+sed -i "s/server\=foobar/server\=$SERVER/" /etc/mod_gearman2/worker.conf
 
 #Starting supervisord
 /usr/bin/supervisord
