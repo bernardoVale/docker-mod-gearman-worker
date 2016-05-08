@@ -54,7 +54,7 @@ You can provide it as a volume at `docker run`
 
 On your **docker host** start a folder to keep your tnsnames.ora
 
-````
+```
 mkdir -p /appliance/oracle
 
 tee /appliance/oracle/tnsnames.ora <<EOF
@@ -102,9 +102,11 @@ Troubleshooting
 
 Error:
 ````
-CRITICAL: Return code of 127 is out of bounds. Make sure the plugin you're trying to run actually exists. (worker: APP)
+CRITICAL: Return code of 127 is out of bounds. Make sure the plugin 
+you're trying to run actually exists. (worker: APP)
 
-[/usr/bin/env: /usr/local/nagios/libexec/check_custom_script: No such file or directory]
+[/usr/bin/env: /usr/local/nagios/libexec/check_custom_script
+: No such file or directory]
 
 ```
 **Cause** 
