@@ -3,7 +3,7 @@ Getting Started
 
 To be able to use this container you need to specify two environment variables at docker run
 
-Variable `HOSTGROUP` to define which Nagios hostgroup this worker will server
+Variable `HOSTGROUP` to define which Nagios hostgroup this worker will use
 
 Variable `SERVER` which define ip:port of your Gearman server
 
@@ -13,10 +13,10 @@ Variable `SERVER` which define ip:port of your Gearman server
 
 
 ```
-docker run -d --name lb2-appliance \
+docker run -d --name gearman-worker \
 -e HOSTGROUP=MYHOSTGROUP \
 -e SERVER=GEARMANSERVER:GEARMAN_PORT \
-bernardovale/lb2-appliance
+bernardovale/mod-gearman-worker
 ```
 
 
@@ -76,18 +76,18 @@ Lauch your container and map your tnsnames.ora folder pointing to `TNS_ADMIN` wh
 
 #### Example of a container with Oracle Client
 ```
-docker run -d --name lb2-appliance \
+docker run -d --name gearman-worker \
 -e HOSTGROUP=APP \
 -e SERVER=GEARMANSERVER:4730 \
 -v /appliance/oracle:/usr/local/instantclient/network/admin \
-lb2-appliance:oracle
+mod-gearman-worker:oracle
 ```
 
 #### Testing the check_oracle_health script
 
 Use the command `docker exec` to make a quick connection test with an Oracle database.
 ```
-docker exec lb2-appliance bash -c \
+docker exec gearman-worker bash -c \
 "/usr/local/nagios/libexec/check_oracle_health --connect '192.168.0.1:1521/test' \
 --username 'system' --password 'mypassword' \
 --mode connection-time --warning 1 --critical 5"
