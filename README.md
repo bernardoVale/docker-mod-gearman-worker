@@ -1,11 +1,15 @@
 Getting Started
 =================
 
-To be able to use this container you need to specify two environment variables at docker run
+This container it's used to provide workers for [Mod Gearman](https://labs.consol.de/nagios/mod-gearman/) using the Distribute Monitoring approach as you can see in the picture above:
 
-Variable `HOSTGROUP` to define which Nagios hostgroup this worker will use
+![Distribute Monitoring](https://labs.consol.de/nagios/mod-gearman/sample_distributed.png)
 
-Variable `SERVER` which define ip:port of your Gearman server
+
+To be able to use this container you need to specify two environment variables at docker run:
+
+  * Variable `HOSTGROUP` define which Nagios hostgroup this worker will use
+  * Variable `SERVER` define ip:port of your Gearman server
 
 
 #### Basic Example
